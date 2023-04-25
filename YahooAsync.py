@@ -6,7 +6,7 @@ import asyncio
 from requests_html import AsyncHTMLSession
 import time
 
-
+#hashh
 my_stocks={'GC=F':'Gold','BTC-USD':'Bitcoin USD','CL=F':'Crude Oil','TSLA':'Tesla','AMD':'AMD','AMZN':'Amazon'}
 
 stocks_urls=[]

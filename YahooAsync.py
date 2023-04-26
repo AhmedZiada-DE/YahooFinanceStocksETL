@@ -67,7 +67,7 @@ def records_prep(results):
         blobs_list.append(items_dict)
         return blobs_list
 
-
+print('working')
 while True:
     #stocks_data(my_stocks)
     results=asyncio.run(stocks_data(my_stocks))

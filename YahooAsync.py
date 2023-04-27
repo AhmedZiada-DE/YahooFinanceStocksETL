@@ -27,17 +27,12 @@ async def GetData(s,stock_url):
     soup=BeautifulSoup(res.text,'lxml')
     percent_change=soup.find_all('fin-streamer',class_='Fw(500) Pstart(8px) Fz(24px)')
 
-    names=soup.find_all('td',class_='C($primaryColor) W(51%)')
-    nums=soup.find_all('td',class_="Ta(end) Fw(600) Lh(14px)")
-    i=0
+    names=soup.find_all(['div','table','td','span'],class_='C($primaryColor) W(51%)')
+    nums=soup.find_all(['div','table','td'],class_="Ta(end) Fw(600) Lh(14px)")
+    
     for item,num in zip(names,nums):
     
         summary[item.get_text()]=num.get_text()
-
-        if i==7 :
-            break
-        
-        i+=1
     
     stock={
         'name':my_stocks[stock_url],

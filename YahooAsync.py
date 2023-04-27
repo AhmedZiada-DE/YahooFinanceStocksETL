@@ -29,10 +29,15 @@ async def GetData(s,stock_url):
 
     names=soup.find_all('td',class_='C($primaryColor) W(51%)')
     nums=soup.find_all('td',class_="Ta(end) Fw(600) Lh(14px)")
-
+    i=0
     for item,num in zip(names,nums):
     
         summary[item.get_text()]=num.get_text()
+
+        if i==7 :
+            break
+        
+        i+=1
     
     stock={
         'name':my_stocks[stock_url],

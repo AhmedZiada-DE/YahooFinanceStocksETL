@@ -40,7 +40,7 @@ async def GetData(s,stock_url):
     }
     full_info={**stock,**summary}
     #print(stock,summary)
-    print(full_info)
+    #print(full_info)
     return full_info
 
 

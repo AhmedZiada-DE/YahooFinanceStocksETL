@@ -74,7 +74,7 @@ while True:
 
     results=asyncio.run(stocks_data(my_stocks))
     results_blob=records_prep(results)
-    print(results_blob)
+    #print(results_blob)
     time.sleep(30)
 
 #Putting the data in Kinesis for ingestion

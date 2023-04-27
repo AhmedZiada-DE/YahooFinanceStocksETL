@@ -7,7 +7,7 @@ from requests_html import AsyncHTMLSession
 import time
 
 
-my_stocks={'GC=F':'Gold','BTC-USD':'Bitcoin USD','CL=F':'Crude Oil'}#,'TSLA':'Tesla','AMZN':'Amazon'}
+my_stocks={'GC=F':'Gold','BTC-USD':'Bitcoin USD','CL=F':'Crude Oil','TSLA':'Tesla','AMZN':'Amazon'}
 
 stocks_urls=[]
 

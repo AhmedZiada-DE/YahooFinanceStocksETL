@@ -79,7 +79,7 @@ while True:
 
 #Putting the data in Kinesis for ingestion
 
-    client = boto3.client('kinesis')
+    client = boto3.client('kinesis',region_name='us-east-1')
 
     response = client.put_records(
         Records=results_blob  ,

@@ -7,18 +7,16 @@ from requests_html import AsyncHTMLSession
 import time
 
 
-my_stocks={'GC=F':'Gold','BTC-USD':'Bitcoin USD','CL=F':'Crude Oil','TSLA':'Tesla','AMZN':'Amazon'}
+my_stocks={'GC=F':'Gold','BTC-USD':'Bitcoin USD','CL=F':'Crude Oil'}#,'TSLA':'Tesla','AMZN':'Amazon'}
 
 stocks_urls=[]
-stock_data=[]
 
-#For data below each stock
-summary={}
+
 
 #Scraping the data from Yahoo finance using Beautiful Soup and asyncio to speed up the process
 
 async def GetData(s,stock_url):
-
+    summary={}
     #To combine all data for stock:
     full_info={}
 
@@ -33,7 +31,7 @@ async def GetData(s,stock_url):
     for item,num in zip(names,nums):
     
         summary[item.get_text()]=num.get_text()
-    
+    #print(summary)
     stock={
         'name':my_stocks[stock_url],
         'price':soup.find('fin-streamer',class_='Fw(b) Fz(36px) Mb(-4px) D(ib)').text,
@@ -41,6 +39,8 @@ async def GetData(s,stock_url):
         'percent_change':percent_change[1].text
     }
     full_info={**stock,**summary}
+    #print(stock,summary)
+    print(full_info)
     return full_info
 
 

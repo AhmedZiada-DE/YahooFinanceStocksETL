@@ -11,7 +11,7 @@ my_stocks={'GC=F':'Gold','BTC-USD':'Bitcoin USD','CL=F':'Crude Oil','TSLA':'Tesl
 
 stocks_urls=[]
 
-
+#stock_data=[]
 
 #Scraping the data from Yahoo finance using Beautiful Soup and asyncio to speed up the process
 
@@ -35,7 +35,7 @@ async def GetData(s,stock_url):
     stock={
         'name':my_stocks[stock_url],
         'price':soup.find('fin-streamer',class_='Fw(b) Fz(36px) Mb(-4px) D(ib)').text,
-        'change':soup.find('span',class_='C($positiveColor)').text,
+        'change':soup.find('fin-streamer',class_='Fw(500) Pstart(8px) Fz(24px)').text,
         'percent_change':percent_change[1].text
     }
     full_info={**stock,**summary}
@@ -69,20 +69,20 @@ def records_prep(results):
     return blobs_list
 
 print('working')
+if __name__ == '__main__' :
+    while True:
 
-while True:
+        results=asyncio.run(stocks_data(my_stocks))
+        results_blob=records_prep(results)
+        #print(results_blob)
+        time.sleep(30)
 
-    results=asyncio.run(stocks_data(my_stocks))
-    results_blob=records_prep(results)
-    #print(results_blob)
-    time.sleep(30)
+    #Putting the data in Kinesis for ingestion
 
-#Putting the data in Kinesis for ingestion
+        client = boto3.client('kinesis',region_name='us-east-1')
 
-    client = boto3.client('kinesis',region_name='us-east-1')
-
-    response = client.put_records(
-        Records=results_blob  ,
-        StreamName='yahoofinanceDS',
-        StreamARN='arn:aws:kinesis:us-east-1:254244063442:stream/yahoofinanceDS'
-    )
+        response = client.put_records(
+            Records=results_blob  ,
+            StreamName='yahoofinanceDS',
+            StreamARN='arn:aws:kinesis:us-east-1:254244063442:stream/yahoofinanceDS'
+        )

@@ -39,22 +39,25 @@ async def GetDataNClean(s,stock_url):
         'percent_change':percent_change[1].text
     }
     full_info={**stock,**summary}
-
+    
+    return full_info
 
 
     #Clean the data
+def clean(results):
+    cleanlist=[]
+    for rec in results:
+        for key,val in rec.items():
+            rec[key]=re.sub(r"[,()+%]+", '', val)
 
-    for key,val in full_info.items():
-        full_info[key]=re.sub(r"[,()+%]+", '', val)
-        
-    for key,val in full_info.items():    
-        if key in ['price','change','percent_change','Open']:
-            try: 
-                full_info[key]=float(val)
-            except ValueError:
-                pass
-
-    return await full_info
+        for key,val in rec.items():    
+            if key in ['price','change','percent_change','Open']:
+                try: 
+                    rec[key]=float(val)
+                except ValueError:
+                    pass
+        cleanlist.append(rec)
+    return cleanlist
 
 
 #Getting data for all the stocks then gathering it in results
@@ -84,9 +87,10 @@ if __name__ == '__main__' :
     while True:
         try:
             results=asyncio.run(stocks_data(my_stocks))
-            results_blob=records_prep(results)
-            print(results_blob)
-            print('\n')
+            cleaned_results=clean(results)
+            results_blob=records_prep(cleaned_results)
+            print(cleaned_results)
+            #print('\n')
 
             #Putting the data in Kinesis for ingestion
             client = boto3.client('kinesis',region_name='us-east-1')
@@ -96,6 +100,7 @@ if __name__ == '__main__' :
                 StreamName='yahoofinanceDS',
                 StreamARN='arn:aws:kinesis:us-east-1:254244063442:stream/yahoofinanceDS'
                     )
+            #print('Done')
             time.sleep(30)
 
         except ValueError:

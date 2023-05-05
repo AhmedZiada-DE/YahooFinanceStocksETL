@@ -4,6 +4,7 @@ import time
 import boto3
 import asyncio
 from requests_html import AsyncHTMLSession
+import re
 
 
 my_stocks={'GC=F':'Gold','SI=F':'Silver','BTC-USD':'Bitcoin USD','ETH-USD':'Ethereum USD','DOGE-USD':'Dogecoin USD','CL=F':'Crude Oil'}
@@ -41,8 +42,16 @@ async def GetData(s,stock_url):
     #print(stock,summary)
     #print(full_info)
     return full_info
-
-
+def clean(full_info):
+    for key,val in full_info.items():
+        full_info[key]=re.sub(r"[,\(\)\+\%]+", '', val)
+        
+        if key in ['price','change','percent_change','Open']:
+            try: 
+                full_info[key]=float(val)
+            except ValueError:
+                pass
+    return full_info
 #Getting data for all the stocks then gathering it in results
 
 async def stocks_data(my_stocks):

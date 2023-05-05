@@ -54,7 +54,7 @@ async def GetDataNClean(s,stock_url):
             except ValueError:
                 pass
 
-    return full_info
+    return await full_info
 
 
 #Getting data for all the stocks then gathering it in results

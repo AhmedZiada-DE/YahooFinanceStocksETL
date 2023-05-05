@@ -6,7 +6,7 @@ import asyncio
 from requests_html import AsyncHTMLSession
 
 
-my_stocks={'GC=F':'Gold','BTC-USD':'Bitcoin USD'}#,'CL=F':'Crude Oil','TSLA':'Tesla','AMZN':'Amazon'}
+my_stocks={'GC=F':'Gold','SI=F':'Silver','BTC-USD':'Bitcoin USD','ETH-USD':'Ethereum USD','DOGE-USD':'Dogecoin USD','CL=F':'Crude Oil'}
 
 stocks_urls=[]
 
@@ -52,8 +52,6 @@ async def stocks_data(my_stocks):
     return await asyncio.gather(*tasks)
 
 
-#results=asyncio.run(stocks_data(my_stocks))
-#print(results)
 
 #Converting the json into the suitable format for ingestion by Kinesis Data Streams
 
@@ -75,15 +73,18 @@ if __name__ == '__main__' :
             results_blob=records_prep(results)
             print(results_blob)
             print('\n')
+
+            #Putting the data in Kinesis for ingestion
+            client = boto3.client('kinesis',region_name='us-east-1')
+
+            response = client.put_records(
+                Records=results_blob  ,
+                StreamName='yahoofinanceDS',
+                StreamARN='arn:aws:kinesis:us-east-1:254244063442:stream/yahoofinanceDS'
+                    )
             time.sleep(30)
+
         except:
             print('Error')
-    #Putting the data in Kinesis for ingestion
 
-#        client = boto3.client('kinesis',region_name='us-east-1')
-#
-#        response = client.put_records(
-#            Records=results_blob  ,
-#            StreamName='yahoofinanceDS',
-#            StreamARN='arn:aws:kinesis:us-east-1:254244063442:stream/yahoofinanceDS'
-#        )
+

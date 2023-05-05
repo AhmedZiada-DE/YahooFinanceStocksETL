@@ -81,15 +81,16 @@ def records_prep(results):
         blobs_list.append(items_dict)
 
     return blobs_list
-
+i=0
 print('working')
 if __name__ == '__main__' :
     while True:
+        i+=1
         try:
             results=asyncio.run(stocks_data(my_stocks))
             cleaned_results=clean(results)
             results_blob=records_prep(cleaned_results)
-            print(cleaned_results)
+            #print(cleaned_results)
             #print('\n')
 
             #Putting the data in Kinesis for ingestion
@@ -100,10 +101,11 @@ if __name__ == '__main__' :
                 StreamName='yahoofinanceDS',
                 StreamARN='arn:aws:kinesis:us-east-1:254244063442:stream/yahoofinanceDS'
                     )
-            #print('Done')
+            print('Done{i}')
+            
             time.sleep(30)
-
-        except ValueError:
+        
+        except :
             print('Error')
 
 

@@ -15,7 +15,7 @@ stocks_urls=[]
 
 #Scraping the data from Yahoo finance using Beautiful Soup and asyncio to speed up the process
 
-async def GetDataNClean(s,stock_url):
+async def GetData(s,stock_url):
     summary={}
     #To combine all data for stock:
     full_info={}
@@ -65,7 +65,7 @@ def clean(results):
 async def stocks_data(my_stocks):
 
     s=AsyncHTMLSession()
-    tasks=(GetDataNClean(s,stock_url) for stock_url in my_stocks)
+    tasks=(GetData(s,stock_url) for stock_url in my_stocks)
     return await asyncio.gather(*tasks)
 
 
@@ -88,8 +88,11 @@ if __name__ == '__main__' :
         i+=1
         try:
             results=asyncio.run(stocks_data(my_stocks))
+            print('results done')
             cleaned_results=clean(results)
+            print('cleaned_results done')
             results_blob=records_prep(cleaned_results)
+            print('results_blob done')
             #print(cleaned_results)
             #print('\n')
 
@@ -106,6 +109,6 @@ if __name__ == '__main__' :
             time.sleep(30)
         
         except :
-            print('Error')
+            print('Error{i}')
 
 

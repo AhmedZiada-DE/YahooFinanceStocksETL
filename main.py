@@ -95,7 +95,7 @@ if __name__ == '__main__' :
             #print('results_blob done')
             #print(cleaned_results)
             #print('\n')
-
+            print(results_blob)
             #Putting the data in Kinesis for ingestion
             client = boto3.client('kinesis',region_name='us-east-1')
 
@@ -104,6 +104,7 @@ if __name__ == '__main__' :
                 StreamName='yahoofinanceDS',
                 StreamARN='arn:aws:kinesis:us-east-1:254244063442:stream/yahoofinanceDS'
                     )
+            print('client done')
             print(f'Done {i}')
             
             time.sleep(30)

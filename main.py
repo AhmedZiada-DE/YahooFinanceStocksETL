@@ -88,11 +88,11 @@ if __name__ == '__main__' :
         i+=1
         try:
             results=asyncio.run(stocks_data(my_stocks))
-            print('results done')
+            #print('results done')
             cleaned_results=clean(results)
-            print('cleaned_results done')
+            #print('cleaned_results done')
             results_blob=records_prep(cleaned_results)
-            print('results_blob done')
+            #print('results_blob done')
             #print(cleaned_results)
             #print('\n')
 
@@ -104,11 +104,11 @@ if __name__ == '__main__' :
                 StreamName='yahoofinanceDS',
                 StreamARN='arn:aws:kinesis:us-east-1:254244063442:stream/yahoofinanceDS'
                     )
-            print('Done{i}')
+            print(f'Done {i}')
             
             time.sleep(30)
         
         except :
-            print('Error{i}')
+            print(f'Error {i}')
 
 

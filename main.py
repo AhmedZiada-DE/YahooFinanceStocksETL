@@ -5,7 +5,7 @@ import boto3
 import asyncio
 from requests_html import AsyncHTMLSession
 import re
-
+from datetime import datetime
 
 my_stocks={'GC=F':'Gold','SI=F':'Silver','BTC-USD':'Bitcoin USD','ETH-USD':'Ethereum USD','DOGE-USD':'Dogecoin USD','CL=F':'Crude Oil'}
 
@@ -32,11 +32,13 @@ async def GetData(s,stock_url):
     
         summary[item.get_text()]=num.get_text()
     #print(summary)
+    now=datetime.now().strftime('%Y-%m-%d %H:%M:%S')
     stock={
         'name':my_stocks[stock_url],
         'price':soup.find('fin-streamer',class_='Fw(b) Fz(36px) Mb(-4px) D(ib)').text,
         'change':soup.find('fin-streamer',class_='Fw(500) Pstart(8px) Fz(24px)').text,
-        'percent_change':percent_change[1].text
+        'percent_change':percent_change[1].text,
+        'time':now
     }
     full_info={**stock,**summary}
     

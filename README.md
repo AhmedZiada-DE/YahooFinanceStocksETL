@@ -6,16 +6,9 @@
 # Overview
 - The story starts with Web Scraping Yahoo Finance Stocks an AWS EC2 instance using a python script that's error proof equiped with try and error to run continusouly so that it can scrape data in realtime.
 -  Data is pushed to Kinesis Data Streams using the python SDK library.
-- Data is ingested by Kinesis Data Streams and pushed to two destinations which are AWS Lambda and Kinesis Firehose:
-    - AWS Lambda:
-        - When the data is pushed to Lambda it prepares the data so that it can be sent to InfluxDB.
-        - The data is sent from InfluxDB to Grafana Open Source so that it can be visualized in realtime.
-    - Kinesis Firehose:
-        - Before processing the data Firehose dumps the unprocessed data after patching it into a backup bucket.
-        - Firehose process the data and transforms the data from a JSON format to a Parquet format with the help of Glue Data Catalog.
-        - The processed data is patched and stored in a separate bucket.
-- Athena works best with parquet data that's why we transform the data to parquet.
-- Athena can then be used to query the parquet data effiecently from S3.
+- Data is ingested by Kinesis Data Streams and pushed to two destinations which are AWS Lambda and Kinesis Firehose.
+- Firehose send the data to two S3 buckets , one is for backup.
+- Athena can then be used to query the data from S3.
 - Quicksight is connected to Athena to visualize the data.
 # Realtime ETL Pipeline
 ## Extracting the data

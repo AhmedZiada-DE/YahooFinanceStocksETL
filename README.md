@@ -20,9 +20,11 @@
         - When the data is pushed to Lambda it prepares the data so that it can be sent to InfluxDB.
         - Grafana is used to visualize the data in realtime by pulling the data from InfluxDB.
     - Kinesis Firehose:
-        - Before processing the data Firehose dumps the unprocessed data after patching it into a backup bucket.
+        - Before processing the data ,Firehose dumps the unprocessed data after patching it into a backup bucket.
         - Firehose process the data and transforms the data from a JSON format to a Parquet format with the help of Glue Data Catalog.
         - The processed data is patched and stored in a separate bucket.
+    - Transforming the data happens by defining a table schema in AWS Glue and then Firehose uses the table to transform the data to parquet.
+         - If there were further transformation on the data. It would require us to use Lambda but since it's a simple transformation doing it inside firehose makes the infrastructure much simpler.
     - The data is transformed to parquet in order to query it with Athena efficiently.
     
 # Visualization

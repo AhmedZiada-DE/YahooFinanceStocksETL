@@ -18,7 +18,7 @@
 - Data is pushed into Kinesis Data Streams which sends the data into two destinations:
     - AWS Lambda:
         - When the data is pushed to Lambda it prepares the data so that it can be sent to InfluxDB.
-        - The data is sent from InfluxDB to Grafana Open Source so that it can be visualized in realtime.
+        - Grafana is used to visualize the data in realtime by pulling the data from InfluxDB.
     - Kinesis Firehose:
         - Before processing the data Firehose dumps the unprocessed data after patching it into a backup bucket.
         - Firehose process the data and transforms the data from a JSON format to a Parquet format with the help of Glue Data Catalog.

@@ -4,15 +4,12 @@
 </p>
 
 # Overview
-- This project starts with Web Scraping Yahoo Finance Stocks in JSON on an AWS EC2 instance using a python script that's error proof running continusouly to scrape data in realtime then the data is sent to Kinesis using the AWS SDK library.
-- The data is ingested by Kinesis Data Streams and pushed to two destinations:
+- The story starts with Web Scraping Yahoo Finance Stocks an AWS EC2 instance using a python script that's error proof equiped with try and error to run continusouly so that it can scrape data in realtime.
+-  Data is pushed to Kinesis Data Streams using the python SDK library.
+- Data is ingested by Kinesis Data Streams and pushed to two destinations which are AWS Lambda and Kinesis Firehose:
     - AWS Lambda:
         - When the data is pushed to Lambda it prepares the data so that it can be sent to InfluxDB.
         - The data is sent from InfluxDB to Grafana Open Source so that it can be visualized in realtime.
-        - <p align="center">
-          <img src="https://github.com/AhmedZiada-DE/YahooFinanceStocksETL/assets/35679850/a43910de-a6d7-4baf-bd68-401f6df4421d"/>
-          </p>
-          
     - Kinesis Firehose:
         - Before processing the data Firehose dumps the unprocessed data after patching it into a backup bucket.
         - Firehose process the data and transforms the data from a JSON format to a Parquet format with the help of Glue Data Catalog.
@@ -20,6 +17,26 @@
 - Athena works best with parquet data that's why we transform the data to parquet.
 - Athena can then be used to query the parquet data effiecently from S3.
 - Quicksight is connected to Athena to visualize the data.
+# Realtime ETL Pipeline
+## Extracting the data
+- Data is extracted from Yahoo Finance asynchronously in a JSON format using a python then it's sent to Kinesis Data Streams using the python SDK library.
+- Data is cleaned after scraping it on EC2 using the same python script.
+## Loading and Transforming the data
+- Data is pushed into Kinesis Data Streams which sends the data into two destinations:
+    - AWS Lambda:
+        - When the data is pushed to Lambda it prepares the data so that it can be sent to InfluxDB.
+        - The data is sent from InfluxDB to Grafana Open Source so that it can be visualized in realtime.
+    - Kinesis Firehose:
+        - Before processing the data Firehose dumps the unprocessed data after patching it into a backup bucket.
+        - Firehose process the data and transforms the data from a JSON format to a Parquet format with the help of Glue Data Catalog.
+        - The processed data is patched and stored in a separate bucket.
+#Visualization
+##Realtime Visualization with Grafana
+-Data is visualized in realtime using Grafana Open Source
+    - ![ezgif com-grafana1](https://github.com/AhmedZiada-DE/YahooFinanceStocksETL/assets/35679850/f7baaa44-5afa-40d6-85bd-5bb46b96e775)
 
+##AWS QuickSight
+- The parquet files in S3 is queried by Athena and visualized with QuickSight.
+    -  ![ezgif com-QuickSight](https://github.com/AhmedZiada-DE/YahooFinanceStocksETL/assets/35679850/9b43d8ac-7c64-402f-99d7-5b10f3c13483)
 
 

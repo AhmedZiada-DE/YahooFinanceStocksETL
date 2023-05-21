@@ -28,7 +28,7 @@
 -Data is visualized in realtime using Grafana Open Source
     - ![ezgif com-grafana1](https://github.com/AhmedZiada-DE/YahooFinanceStocksETL/assets/35679850/f7baaa44-5afa-40d6-85bd-5bb46b96e775)
 
-##AWS QuickSight
+## AWS QuickSight
 - The parquet files in S3 is queried by Athena and visualized with QuickSight.
     -  ![ezgif com-QuickSight](https://github.com/AhmedZiada-DE/YahooFinanceStocksETL/assets/35679850/9b43d8ac-7c64-402f-99d7-5b10f3c13483)
 

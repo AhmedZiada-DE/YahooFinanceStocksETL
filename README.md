@@ -24,7 +24,7 @@
         - Firehose process the data and transforms the data from a JSON format to a Parquet format with the help of Glue Data Catalog.
         - The processed data is patched and stored in a separate bucket.
     - Transforming the data happens by defining a table schema in AWS Glue and then Firehose uses the table to transform the data to parquet.
-         - If there were further transformation on the data. It would require us to use Lambda but since it's a simple transformation doing it inside firehose makes the infrastructure much simpler.
+         - If there were further transformations on the data. It would require us to use Lambda but since it's a simple transformation doing it inside firehose makes the infrastructure much simpler.
     - The data is transformed to parquet in order to query it with Athena efficiently.
     
 # Visualization

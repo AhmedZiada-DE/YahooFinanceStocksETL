@@ -23,9 +23,12 @@
         - Before processing the data Firehose dumps the unprocessed data after patching it into a backup bucket.
         - Firehose process the data and transforms the data from a JSON format to a Parquet format with the help of Glue Data Catalog.
         - The processed data is patched and stored in a separate bucket.
+    - The data is transformed to parquet in order to query it with Athena efficiently.
+    
 #Visualization
 ##Realtime Visualization with Grafana
--Data is visualized in realtime using Grafana Open Source
+- Data is visualized in realtime by sending the data to Lambda then Lambda prepares the data and sends it to InfluxDB.
+- Grafana pulls the data from InfluxDB and the data is send used for visualizations.
     - ![ezgif com-grafana1](https://github.com/AhmedZiada-DE/YahooFinanceStocksETL/assets/35679850/f7baaa44-5afa-40d6-85bd-5bb46b96e775)
 
 ## AWS QuickSight

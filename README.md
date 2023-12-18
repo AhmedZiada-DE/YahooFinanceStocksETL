@@ -4,12 +4,12 @@
 </p>
 
 # Overview
-- The story starts with Web Scraping Yahoo Finance Stocks an AWS EC2 instance using a python script that's error proof equiped with try and error to run continusouly so that it can scrape data in realtime.
--  Data is pushed to Kinesis Data Streams using the python SDK library.
+- The story starts with Web Scraping Yahoo Finance Stocks on an AWS EC2 instance using a python script that's error proof equipped with a try and error code to run continuously so that it can scrape data in real-time.
+- Data is pushed to Kinesis Data Streams using the python SDK library.
 - Data is ingested by Kinesis Data Streams and pushed to two destinations which are AWS Lambda and Kinesis Firehose.
-- Firehose send the data to two S3 buckets , one is for backup.
+- Firehose sends the data to two S3 buckets, one is for backup.
 - Athena can then be used to query the data from S3.
-- Quicksight is connected to Athena to visualize the data.
+- Quick Sight is connected to Athena to visualize the data.
 # Realtime ETL Pipeline
 ## Extracting the data
 - Data is extracted from Yahoo Finance asynchronously in a JSON format using a python then it's sent to Kinesis Data Streams using the python SDK library.
